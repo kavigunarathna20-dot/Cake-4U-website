@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Cake 4U - A Slice of Heaven</title>
+        <link rel="stylesheet" href="style.css">
+
+        <style>
+        /* ============================================================
+            GALLERY PAGE
+            ============================================================ */
+
+            .gallery-intro {
+                padding: var(--space-xl) 40px var(--space-lg);
+                text-align: center;
+            }
+
+            .section-heading {
+                font-family: Georgia, 'Times New Roman', serif;
+                font-size: 60px;
+                color: var(--primary-color);
+            }
+
+            .filter-bar {
+                display: flex;
+                justify-content: center;
+                flex-wrap: wrap;
+                gap: 10px;
+                padding: 20px 40px 30px;
+            }
+            .filter-btn {
+                background: var(--primary-dark);
+                border: 1px solid var(--primary-color);
+                border-radius: 30px;
+                padding: 10px 24px;
+                font-size: 13px;
+                font-weight: 600;
+                color: var(--dark-text, #222);
+                cursor: pointer;
+                backdrop-filter: blur(10px);
+                -webkit-backdrop-filter: blur(10px);
+                transition: all 0.3s ease;
+            }
+            .filter-btn:hover {
+                background: var(--accent-gold);
+                border-color: var(--primary-color);
+            }
+            /* Currently-selected filter button, toggled by JS below */
+            .filter-btn.active {
+                background: var(--primary-dark);
+                color: #fff;
+                border-color: var(--primary-color);
+            }
+
+            .gallery-section {
+                padding: var(--space-lg) 40px var(--space-xl);
+            }
+
+            .gallery-category-title {
+                font-family: Georgia, 'Times New Roman', serif;
+                font-size: clamp(1.6rem, 3vw, 2.2rem);
+                color: var(--primary-color);
+                text-align: center;
+                margin-bottom: var(--space-lg);
+            }
+
+            .gallery-grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+                gap: var(--space-md);
+                max-width: 1200px;
+                margin: 0 auto;
+            }
+
+            .gallery-item {
+                display: block;
+                border: none;
+                padding: 0;
+                background: none;
+                cursor: zoom-in;
+                border-radius: var(--radius);
+                overflow: hidden;
+                aspect-ratio: 1 / 1;
+                box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+                transition: transform 0.2s ease, box-shadow 0.2s ease;
+            }
+
+            .gallery-item:hover,
+            .gallery-item:focus-visible {
+                transform: translateY(-4px);
+                box-shadow: 0 12px 26px rgba(0, 0, 0, 0.14);
+            }
+
+            .gallery-item img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+
+            /* LIGHTBOX */
+
+            .lightbox-overlay {
+                position: fixed;
+                inset: 0;
+                background: rgba(38, 24, 20, 0.85);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                padding: 24px;
+                z-index: 200;
+                opacity: 0;
+                pointer-events: none;
+                transition: opacity 0.2s ease;
+            }
+
+            .lightbox-overlay.open {
+                opacity: 1;
+                pointer-events: auto;
+            }
+
+            .lightbox-overlay img {
+                max-width: 90vw;
+                max-height: 85vh;
+                border-radius: 8px;
+                box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+            }
+
+            .lightbox-close {
+                position: absolute;
+                top: 20px;
+                right: 24px;
+                background: none;
+                border: none;
+                color: var(--white);
+                font-size: 2.2rem;
+                line-height: 1;
+                cursor: pointer;
+            }
+        </style>
+    </head>
+
+    <body>
+        <header>
+            <a href="#" class="logo">
+                <img src="./images/logo.jpeg" alt="CAKE 4U" class="logo-image" />
+            
+                <div class="logo-text"> 
+                    <h1>CAKE 4U</h1>
+                    <p>A SLICE OF HEAVEN</p>
+                </div>
+            </a>
+
+            <button class="nav-toggle" id="navToggle" aria-lable="Togle menu" aria-expanded="false" aria-controls="mainNav">
+                <span></span><span></span><span></span>
+            </button>
+
+            <nav class="main-nav" id="mainNav">
+                <a href="home.html" class="nav-link">Home</a>
+                <a href="about.html" class="nav-link">About Us</a>
+                <a href="products.html" class="nav-link">Products</a>
+                <a href="gallery.html" class="nav-link active">Gallery</a>
+                <a href="contact.html" class="nav-link">Contact Us</a>
+            </nav>
+        </header>
+
+        <main>
+          <section class="gallery-intro">
+                <h2 class="section-heading">Our Cake Gallery</h2>
+                <p>A look at cakes we've baked for real celebrations — click any photo to view it larger.</p>
+            </section>
+
+            <div class="filter-bar">
+                <button class="filter-btn active" data-category="All">All</button>
+                <button class="filter-btn" data-category="Kids Cakes">Kids Cakes</button>
+                <button class="filter-btn" data-category="Birthday Cakes">Birthday Cakes</button>
+                <button class="filter-btn" data-category="Custom & Themed Cakes">Custom & Themed Cakes</button>
+            </div>
+
+            <!-- CLASSIC BIRTHDAY CAKES -->
+            <section class="gallery-section" id="Birthday Cakes">
+                <h3 class="gallery-category-title">Classic Birthday Cakes</h3>
+                <div class="gallery-grid">
+                <button class="gallery-item" data-full="./images/img1.jpeg">
+                    <img src="./images/img1.jpeg" alt="Chocolate and cream birthday cake for Dasuni" loading="lazy" />
+                </button>
+                <button class="gallery-item" data-full="./images/img3.jpeg">
+                    <img src="./images/img3.jpeg" alt="Chocolate drip cake with strawberries for Thaththi" loading="lazy" />
+                </button>
+                <button class="gallery-item" data-full="./images/img8.jpeg">
+                    <img src="./images/img8.jpeg" alt="Chocolate square cake for Chathuranga" loading="lazy" />
+                </button>
+                <button class="gallery-item" data-full="./images/img14.jpeg">
+                    <img src="./images/img14.jpeg" alt="Oreo drip cake" loading="lazy" />
+                </button>
+                <button class="gallery-item" data-full="./images/img6.jpeg">
+                    <img src="./images/img6.jpeg" alt="Green floral birthday cake for Suramya" loading="lazy" />
+                </button>
+                <button class="gallery-item" data-full="./images/img7.jpeg">
+                    <img src="./images/img7.jpeg" alt="Yellow rose birthday cake for Amma" loading="lazy" />
+                </button>
+                <button class="gallery-item" data-full="./images/img9.jpeg">
+                    <img src="./images/img9.jpeg" alt="Purple and blue floral square cake" loading="lazy" />
+                </button>
+                <button class="gallery-item" data-full="./images/img19.jpeg">
+                    <img src="./images/img19.jpeg" alt="Butterfly garden cake for Dinuthi" loading="lazy" />
+                </button>
+                <button class="gallery-item" data-full="./images/img23.jpeg">
+                    <img src="./images/img23.jpeg" alt="Elegant chocolate cake with roses and gold spheres" loading="lazy" />
+                </button>
+                <button class="gallery-item" data-full="./images/img24.jpeg">
+                    <img src="./images/img24.jpeg" alt="Pink drip cake with sugar roses" loading="lazy" />
+                </button>
+                <button class="gallery-item" data-full="./images/img28.jpeg">
+                    <img src="./images/img28.jpeg" alt="White drip cake with gold butterflies for Amma and Thaththi" loading="lazy" />
+                </button>
+                <button class="gallery-item" data-full="./images/img31.jpeg">
+                    <img src="./images/img31.jpeg" alt="Pink cake with gold butterflies for Esadi" loading="lazy" />
+                </button>
+                <button class="gallery-item" data-full="./images/img32.jpeg">
+                    <img src="./images/img32.jpeg" alt="Pink cake with gold butterflies and roses for Esadi" loading="lazy" />
+                </button>         
+                </div>
+            </section>
+
+            <!-- KIDS CAKES -->
+            <section class="gallery-section" id="Kids Cakes">
+                <h3 class="gallery-category-title">Kids Cakes</h3>
+                <div class="gallery-grid">
+                <button class="gallery-item" data-full="./images/img25.jpeg">
+                    <img src="./images/img25.jpeg" alt="Panda themed cake for Chathum" loading="lazy" />
+                </button>
+                <button class="gallery-item" data-full="./images/img18.jpeg">
+                    <img src="./images/img18.jpeg" alt="Panda themed cake for Chathum, side view" loading="lazy" />
+                </button>
+                <button class="gallery-item" data-full="./images/img21.jpeg">
+                    <img src="./images/img21.jpeg" alt="Panda themed cake for Chathum, close view" loading="lazy" />
+                </button>
+                <button class="gallery-item" data-full="./images/img20.jpeg">
+                    <img src="./images/img20.jpeg" alt="Bunny themed cake for Chenith's 5th birthday" loading="lazy" />
+                </button>
+                <button class="gallery-item" data-full="./images/img26.jpeg">
+                    <img src="./images/img26.jpeg" alt="Car themed cake for Waditha's 6th birthday" loading="lazy" />
+                </button>
+                <button class="gallery-item" data-full="./imgaes/img37.jpeg">
+                    <img src="./images/img37.jpeg" alt="Sea themed cake for 2nd birthday" loading="lazy" />
+                </button>
+                </div>
+            </section>
+
+            <!-- CUSTOM & THEMED CAKES -->
+            <section class="gallery-section" id="Custom & Themed Cakes">
+                <h3 class="gallery-category-title">Custom &amp; Themed Cakes</h3>
+                <div class="gallery-grid">
+                <button class="gallery-item" data-full="./images/img15.jpeg">
+                    <img src="./images/img15.jpeg" alt="BMW logo themed birthday cake for Chamath" loading="lazy" />
+                </button>
+                <button class="gallery-item" data-full="./images/img33.jpeg">
+                    <img src="./images/img33.jpeg" alt="Bow cake" loading="lazy" />
+                </button>
+                </div>
+            </section>
+
+            
+        <div class="lightbox-overlay" id="lightboxOverlay">
+            <button class="lightbox-close" id="lightboxClose">&times;</button>
+            <img id="lightboxImage" src="" alt="">
+        </div>
+
+
+        </main>
+
+        <footer>
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="footer-logo">
+                        <img src="./images/logo.jpeg" alt="CAKE 4U" class="footer-logo-image" />
+                        <span class="footer-brand">CAKE 4U</span>
+                    </div>
+                    <p>A SLICE OF HEAVEN</p>
+                </div>
+                <div class="footer-section">
+                    <h2>Quick Links</h2>
+                    <div class="footer-links">
+                        <a href="home.html">Home</a>
+                        <a href="about.html">About Us</a>
+                        <a href="products.html">Products</a>
+                        <a href="gallery.html">Gallery</a>
+                        <a href="contact.html">Contact Us</a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h2>Contact</h2>
+                    <p>Mabopitiya, Alawwa</p>
+                    <P>071 4397961</P>
+                    <p>071 8077484</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 CAKE 4U. All rights reserved.</p>
+            </div>
+        </footer>
+
+        <script>
+            // Checks every "revealable" element (goal cards, content boxes,
+            // and the #exp heading) and adds the "active" class once the
+            // element has scrolled far enough into the viewport, which
+            // triggers the fade/slide-in CSS transition defined above.
+            function reveal() {
+                // Select all elements that should animate in on scroll
+                const reveals = document.querySelectorAll(".card, .content-box, #exp");
+
+                reveals.forEach((item) => {
+                // Height of the visible browser window
+                const windowHeight = window.innerHeight;
+                // Distance from the top of the viewport to the top of the element
+                const elementTop = item.getBoundingClientRect().top;
+                // How many pixels of the element must be visible before it reveals
+                const visiblePoint = 100;
+
+                // If the element has scrolled far enough up into view, reveal it
+                if (elementTop < windowHeight - visiblePoint) {
+                    item.classList.add("active");
+                }
+                });
+            }
+
+            // Re-check on every scroll event
+            window.addEventListener("scroll", reveal);
+            // Run once immediately on page load (in case content is already in view)
+            reveal();
+
+            document.addEventListener("DOMContentLoaded", () => {
+            // Mobile nav toggle
+                const navToggle = document.getElementById("navToggle");
+                const mainNav = document.getElementById("mainNav");
+
+                if (navToggle && mainNav) {
+                    navToggle.addEventListener("click", () => {
+                        const isOpen = mainNav.classList.toggle("open");
+                        navToggle.setAttribute("aria-expanded", isOpen);
+                    });
+
+                mainNav.querySelectorAll(".nav-link").forEach((link) => {
+                    link.addEventListener("click", () => {
+                        mainNav.classList.remove("open");
+                        navToggle.setAttribute("aria-expanded", "false");
+                    });
+                });
+            }
+
+                 // Category filter
+                const filterBtns = document.querySelectorAll(".filter-btn");
+                const sections = document.querySelectorAll(".gallery-section");
+
+                filterBtns.forEach((btn) => {
+                    btn.addEventListener("click", () => {
+                        filterBtns.forEach((b) => b.classList.remove("active"));
+                        btn.classList.add("active");
+
+                        const category = btn.dataset.category;
+                        sections.forEach((section) => {
+                            section.style.display =
+                                category === "All" || section.id === category ? "" : "none";
+                        });
+                    });
+                });
+
+                // Lightbox
+                const overlay = document.getElementById("lightboxOverlay");
+                const overlayImg = document.getElementById("lightboxImage");
+                const closeBtn = document.getElementById("lightboxClose");
+
+                document.querySelectorAll(".gallery-item").forEach((item) => {
+                    item.addEventListener("click", () => {
+                        overlayImg.src = item.dataset.full;
+                        overlayImg.alt = item.querySelector("img").alt;
+                        overlay.classList.add("open");
+                        document.body.style.overflow = "hidden";
+                    });
+                });
+
+                function closeLightbox() {
+                    overlay.classList.remove("open");
+                    document.body.style.overflow = "";
+                }
+
+                closeBtn.addEventListener("click", closeLightbox);
+                overlay.addEventListener("click", (e) => {
+                    if (e.target === overlay) closeLightbox();
+                });
+                document.addEventListener("keydown", (e) => {
+                    if (e.key === "Escape") closeLightbox();
+                });
+            });
+    
+        </script>
+
+    </body>
+</html>

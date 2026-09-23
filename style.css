@@ -1,0 +1,477 @@
+/* ============ TOKENS ============ */
+html {
+  scroll-behavior: smooth;
+}
+
+html, body {
+  height: 100%;
+}
+:root {
+  --primary-color: #6B3B2E;
+  --primary-dark: #F0B8CC;
+  --primary-mid: #F2C6D6;
+  --primary-light: #F5F5F5;
+  --accent-gold: #D98B32;
+
+  --dark-text: #263238;
+  --medium-text: #546e7a;
+  --light-border: #e8f0eb;
+  --light-bg: #f4f9f4;
+  --white: #ffffff;
+
+  --space-sm: 8px;
+  --space-md: 16px;
+  --space-lg: 32px;
+  --space-xl: 64px;
+  --radius: 12px;
+
+  --font-body: "Segoe UI", Arial, sans-serif;
+  --font-heading: "Poppins", "Segoe UI", Arial, sans-serif;
+  --font-accent: Georgia, "Times New Roman", serif;
+}
+
+/* ============ RESET ============ */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  font-family: var(--font-heading);
+  background: var(--white);
+  color: var(--dark-text);
+  line-height: 1.6;
+}
+/* ================================================
+   HEADER
+================================================ */
+
+header {
+  background: var(--primary-dark);
+  padding: 50px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  position: sticky;
+  top: 0;
+  z-index: 100;
+
+  height: 68px;
+}
+
+/* ================================================
+   LOGO SECTION
+================================================ */
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  text-decoration: none;
+}
+
+.logo-image {
+  width: 50px;
+  height: 50px;
+
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.logo-text {
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.logo-text h1 {
+  font-size: 30px;
+  font-weight: var(--font-weight-bold);
+
+  color: var(--dark-text);
+
+  letter-spacing: 1.5px;
+  line-height: 1.1;
+  margin: 0;
+}
+
+.logo-text p {
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  font-size: 12px;
+  color: var(--primary-color);
+
+  letter-spacing: 0.5px;
+  margin: 0;
+}
+
+/* ================================================
+   MAIN NAVIGATION
+================================================ */
+
+.main-nav {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.nav-link {
+  color: var(--medium-text);
+
+  font-size: 13px;
+  font-weight: var(--font-weight-semibold);
+
+  padding: 6px 12px;
+
+  text-decoration: none;
+
+  border-bottom: 2px solid transparent;
+
+  transition: all 0.3s ease;
+}
+
+/* Navigation Hover Effect */
+
+.nav-link:hover {
+  color: var(--primary-color);
+  border-bottom-color: var(--primary-color);
+}
+
+/* Active Navigation Link */
+
+.nav-link.active {
+  color: var(--dark-text);
+  border-bottom-color: var(--primary-color);
+}
+
+/* ================================================
+   MAIN CONTENT AREA
+================================================ */
+main {
+  flex: 1 0 auto;
+  background-color: var(--primary-mid);
+}
+.content-container {
+  min-height: calc(100vh - 136px);
+  max-width: 1200px;
+
+  margin: 0 auto;
+  padding: 40px;
+}
+
+/* ================================================
+   TYPOGRAPHY
+================================================ */
+
+h2 {
+  font-size: 28px;
+  font-weight: var(--font-weight-bold);
+
+  color: var(--dark-text);
+
+  margin-bottom: 16px;
+}
+
+.Headings {
+  margin-top: 30px;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 50px;
+  font-family: "Poppins", sans-serif;
+  font-weight: 700;
+  text-align: center;
+
+  color: #07424d;
+  padding-top: 30px;
+  margin-left: 20px;
+}
+
+h3 {
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 20px;
+  font-weight: var(--font-weight-bold);
+
+  color: var(--dark-text);
+
+  margin-bottom: 12px;
+}
+
+p {
+  font-size: 14px;
+  color: var(--medium-text);
+
+  line-height: 1.75;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  position: relative;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: var(--primary-mid);
+  filter: blur(10px);
+  transform: scale(1.1); /* prevents blurry edges */
+  z-index: -1;
+}
+
+/* ================================================
+   LINKS
+================================================ */
+
+a {
+  color: var(--primary-color);
+  text-decoration: none;
+
+  transition: color 0.3s ease;
+}
+
+a:hover {
+  color: var(--accent-gold);
+}
+
+/* ================================================
+   BUTTONS
+================================================ */
+
+button,
+.button {
+  background: var(--primary-dark);
+  color: var(--white);
+
+  border: none;
+  border-radius: 8px;
+
+  padding: 11px 24px;
+
+  font-size: 13px;
+  font-weight: var(--font-weight-semibold);
+
+  cursor: pointer;
+
+  transition: background 0.3s ease;
+}
+
+button:hover,
+.button:hover {
+  background: var(--primary-dark);
+}
+
+/* ================================================
+   FOOTER
+================================================ */
+
+footer {
+  flex-shrink: 0;
+  background: var(--primary-dark);
+  padding: 40px clamp(20px, 6vw, 120px) 16px;
+  margin-top: var(--space-xl);
+}
+
+.footer-content {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-lg)
+}
+
+.footer-section:last-child {
+  margin-left: auto;
+}
+
+.footer-section h2 {
+  font-size: 11px;
+  font-weight: var(--font-weight-bold);
+
+  color: var(--dark-text);
+
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+
+  margin-bottom: 10px;
+}
+
+.footer-section p {
+  font-size: 13px;
+  color: var(--medium-text);
+
+  line-height: 1.7;
+  margin: 0;
+}
+
+.footer-links {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+ 
+.footer-links a {
+  font-size: 13px;
+  color: var(--medium-text);
+}
+ 
+.footer-links a:hover {
+  color: var(--primary-color);
+}
+
+/* ================================================
+   FOOTER LOGO
+================================================ */
+
+.footer-logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  margin-bottom: 10px;
+}
+
+.footer-logo-image {
+  width: 26px;
+  height: 26px;
+
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.footer-brand {
+  font-size: 13px;
+  font-weight: var(--font-weight-bold);
+
+  color: var(--dark-text);
+
+  letter-spacing: 1px;
+}
+
+/* ================================================
+   FOOTER BOTTOM
+================================================ */
+
+.footer-bottom {
+  max-width: 1200px;
+
+  margin: 0 auto;
+  padding-top: 12px;
+
+  display: flex;
+  justify-content: center;
+
+  font-size: 10px;
+  color: var(--medium-text);
+}
+
+/* ================================================
+   IMAGES & MEDIA
+================================================ */
+
+img {
+  max-width: 100%;
+  height: auto;
+
+  display: block;
+}
+
+.img-rounded {
+  border-radius: 12px;
+}
+
+.img-shadow {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+
+/* FOCUS STATES (ACCESSIBILITY) */
+ 
+a:focus-visible,
+button:focus-visible,
+.nav-link:focus-visible,
+.nav-toggle:focus-visible {
+  outline: 2px solid var(--primary-color);
+  outline-offset: 2px;
+}
+
+/* ================================================
+   RESPONSIVE DESIGN - TABLET
+================================================ */
+
+@media (max-width: 768px) {
+  header {
+    padding: 0 20px;
+
+    flex-direction: column;
+    gap: 16px;
+
+    height: auto;
+  }
+
+  .main-nav {
+    flex-wrap: wrap;
+    gap: 4px;
+    width: 100%;
+  }
+
+  .nav-link {
+    font-size: 12px;
+    padding: 6px 8px;
+  }
+
+  .content-container {
+    padding: 20px;
+  }
+
+  .footer-content {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .footer-bottom {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  h2 {
+    font-size: 24px;
+  }
+
+  h3 {
+    font-size: 18px;
+  }
+}
+
+/* ================================================
+   RESPONSIVE DESIGN - MOBILE
+================================================ */
+
+@media (max-width: 480px) {
+  header {
+    padding: 0 16px;
+  }
+
+  .logo-text h1,
+  .logo-text h2 {
+    font-size: 14px;
+  }
+
+  .content-container {
+    padding: 16px;
+  }
+
+  button,
+  .button {
+    width: 100%;
+  }
+
+  .footer-section {
+    text-align: center;
+  }
+}

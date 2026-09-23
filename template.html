@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Cake 4U - A Slice of Heaven</title>
+        <link rel="stylesheet" href="style.css">
+    </head>
+
+    <body>
+        <header>
+            <a href="#" class="logo">
+                <img src="./images/logo.jpeg" alt="CAKE 4U" class="logo-image" />
+            
+                <div class="logo-text"> 
+                    <h1>CAKE 4U</h1>
+                    <p>A SLICE OF HEAVEN</p>
+                </div>
+            </a>
+
+            <button class="nav-toggle" id="navToggle" aria-lable="Togle menu" aria-expanded="false" aria-controls="mainNav">
+                <span></span><span></span><span></span>
+            </button>
+
+            <nav class="main-nav" id="mainNav">
+                <a href="home.html" class="nav-link active">Home</a>
+                <a href="about.html" class="nav-link">About Us</a>
+                <a href="products.html" class="nav-link">Products</a>
+                <a href="gallery.html" class="nav-link">Gallery</a>
+                <a href="contact.html" class="nav-link">Contact Us</a>
+            </nav>
+        </header>
+
+        <main>
+
+        </main>
+
+        <footer>
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="footer-logo">
+                        <img src="./images/logo.jpeg" alt="CAKE 4U" class="footer-logo-image" />
+                        <span class="footer-brand">CAKE 4U</span>
+                    </div>
+                    <p>A SLICE OF HEAVEN</p>
+                </div>
+                <div class="footer-section">
+                    <h2>Quick Links</h2>
+                    <div class="footer-links">
+                        <a href="home.html">Home</a>
+                        <a href="about.html">About Us</a>
+                        <a href="products.html">Products</a>
+                        <a href="gallery.html">Gallery</a>
+                        <a href="contact.html">Contact Us</a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h2>Contact</h2>
+                    <p>Mabopitiya, Alawwa</p>
+                    <P>071 4397961</P>
+                    <p>071 8077484</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 CAKE 4U. All rights reserved.</p>
+            </div>
+        </footer>
+
+        <script>
+            // Checks every "revealable" element (goal cards, content boxes,
+            // and the #exp heading) and adds the "active" class once the
+            // element has scrolled far enough into the viewport, which
+            // triggers the fade/slide-in CSS transition defined above.
+            function reveal() {
+                // Select all elements that should animate in on scroll
+                const reveals = document.querySelectorAll(".card, .content-box, #exp");
+
+                reveals.forEach((item) => {
+                // Height of the visible browser window
+                const windowHeight = window.innerHeight;
+                // Distance from the top of the viewport to the top of the element
+                const elementTop = item.getBoundingClientRect().top;
+                // How many pixels of the element must be visible before it reveals
+                const visiblePoint = 100;
+
+                // If the element has scrolled far enough up into view, reveal it
+                if (elementTop < windowHeight - visiblePoint) {
+                    item.classList.add("active");
+                }
+                });
+            }
+
+            // Re-check on every scroll event
+            window.addEventListener("scroll", reveal);
+            // Run once immediately on page load (in case content is already in view)
+            reveal();
+        </script>
+
+    </body>
+</html>

@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Cake 4U - A Slice of Heaven</title>
+        <link rel="stylesheet" href="style.css">
+
+        <style>
+            /* ============ CONTACT BANNER ============ */
+            .contact-banner {
+                font-family: Georgia, 'Times New Roman', Times, serif;
+                font-size: 18px;
+                text-align: center;
+            }
+
+            .contact-banner h1 {
+                font-family:Georgia, 'Times New Roman', Times, serif;
+                font-weight: 700;
+                color: var(--primary-color);
+                margin: 0 0 var(--space-sm);
+            }
+
+            .contact-tagline {
+                font-family: Georgia, "Times New Roman", serif;
+                font-style: italic;
+                color: var(--medium-text);
+                margin: 0;
+            }
+
+            /* ============ LAYOUT ============ */
+            .contact-layout {
+                max-width: 1180px;
+                margin: 0 auto;
+                padding: var(--space-xl) var(--space-lg);
+                display: grid;
+                grid-template-columns: 0.9fr 1.1fr;
+                gap: var(--space-xl);
+            }
+
+            /* ============ INFO SIDE ============ */
+            .contact-info-block {
+                margin-bottom: var(--space-lg);
+            }
+
+            .contact-info-block h3 {
+                font-family:Georgia, 'Times New Roman', Times, serif;
+                font-weight: 600;
+                color: var(--primary-color);
+                font-size: 1rem;
+                margin: 0 0 var(--space-sm);
+            }
+
+            .contact-info-block p {
+                margin: 0 0 4px;
+                color: var(--medium-text);
+            }
+
+            .contact-info-block a {
+                color: var(--medium-text);
+                text-decoration: none;
+            }
+
+            .contact-info-block a:hover {
+                color: var(--primary-color);
+            }
+
+            .btn-order-call {
+                display: inline-block;
+                margin-top: var(--space-md);
+                background: var(--primary-color);
+                color: var(--white);
+                font-family:Georgia, 'Times New Roman', Times, serif;
+                font-weight: 600;
+                padding: 14px 28px;
+                border-radius: 999px;
+                text-decoration: none;
+                transition: background 0.2s ease, transform 0.2s ease;
+            }
+
+            .btn-order-call:hover {
+                background: var(--accent-gold);
+                color: var(--primary-color);
+                transform: translateY(-2px);
+            }
+
+            /* ============ FORM SIDE ============ */
+            .contact-form-wrap {
+                background: var(--white);
+                border: 1px solid var(--light-border);
+                border-radius: var(--radius);
+                padding: var(--space-lg);
+            }
+
+            /* Toggle */
+            .form-toggle {
+                display: flex;
+                background: var(--light-bg);
+                border-radius: 999px;
+                padding: 4px;
+                margin-bottom: var(--space-lg);
+            }
+
+            .toggle-btn {
+                flex: 1;
+                border: none;
+                background: transparent;
+                padding: 10px 16px;
+                border-radius: 999px;
+                font-family: "Poppins", "Segoe UI", Arial, sans-serif;
+                font-weight: 600;
+                font-size: 0.9rem;
+                color: var(--medium-text);
+                cursor: pointer;
+                transition: background 0.2s ease, color 0.2s ease;
+            }
+
+            .toggle-btn.active {
+                background: var(--primary-color);
+                color: var(--white);
+            }
+
+            /* Form fields */
+            .form-row {
+                margin-bottom: var(--space-md);
+            }
+
+            .form-row label {
+                display: block;
+                font-family: "Poppins", "Segoe UI", Arial, sans-serif;
+                font-weight: 600;
+                font-size: 0.9rem;
+                color: var(--dark-text);
+                margin-bottom: 6px;
+            }
+
+            .form-row input,
+            .form-row select,
+            .form-row textarea {
+                width: 100%;
+                padding: 12px 14px;
+                border: 1px solid var(--light-border);
+                border-radius: 8px;
+                font-family: inherit;
+                font-size: 0.95rem;
+                background: var(--light-bg);
+            }
+
+            .form-row input:focus,
+            .form-row select:focus,
+            .form-row textarea:focus {
+                outline: 2px solid var(--primary-dark);
+                outline-offset: 2px;
+            }
+
+            .form-row-split {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: var(--space-md);
+            }
+
+            .order-fields {
+                background: var(--light-bg);
+                border-radius: var(--radius);
+                padding: var(--space-md);
+                margin-bottom: var(--space-md);
+                border-left: 3px solid var(--accent-gold);
+            }
+
+            .btn-submit {
+                width: 100%;
+                background: var(--primary-color);
+                color: var(--white);
+                border: none;
+                padding: 14px;
+                border-radius: 999px;
+                font-family: "Poppins", "Segoe UI", Arial, sans-serif;
+                font-weight: 600;
+                font-size: 1rem;
+                cursor: pointer;
+                transition: background 0.2s ease;
+            }
+
+            .btn-submit:hover {
+                background: var(--accent-gold);
+            }
+
+            .form-success {
+                margin-top: var(--space-md);
+                color: #2e7d32;
+                font-weight: 600;
+                text-align: center;
+            }
+
+            /* ============ RESPONSIVE ============ */
+            @media (max-width: 768px) {
+            .contact-layout {
+                grid-template-columns: 1fr;
+            }
+            .form-row-split {
+                grid-template-columns: 1fr;
+            }
+            }
+        </style>
+    </head>
+
+    <body>
+        <header>
+            <a href="#" class="logo">
+                <img src="./images/logo.jpeg" alt="CAKE 4U" class="logo-image" />
+            
+                <div class="logo-text"> 
+                    <h1>CAKE 4U</h1>
+                    <p>A SLICE OF HEAVEN</p>
+                </div>
+            </a>
+
+            <button class="nav-toggle" id="navToggle" aria-lable="Togle menu" aria-expanded="false" aria-controls="mainNav">
+                <span></span><span></span><span></span>
+            </button>
+
+            <nav class="main-nav" id="mainNav">
+                <a href="home.html" class="nav-link">Home</a>
+                <a href="about.html" class="nav-link">About Us</a>
+                <a href="products.html" class="nav-link">Products</a>
+                <a href="gallery.html" class="nav-link">Gallery</a>
+                <a href="contact.html" class="nav-link active">Contact Us</a>
+            </nav>
+        </header>
+
+        <main>
+        <!-- PAGE BANNER -->
+            <section class="contact-banner">
+                <h1>Contact Us</h1>
+                <p class="contact-tagline">Questions, custom orders, or just craving something sweet — we're here.</p>
+            </section>
+
+            <!-- CONTACT LAYOUT -->
+            <section class="contact-layout">
+
+                <!-- LEFT: INFO -->
+                <div class="contact-info">
+                <div class="contact-info-block">
+                    <h3>📍 Address</h3>
+                    <p>Mabopitiya,<br>Alawwa.</p>
+                </div>
+                <div class="contact-info-block">
+                    <h3>📞 Phone</h3>
+                    <p><a href="tel:+94714397961">+94 71 439 7961</a></p>
+                    <p><a href="tel:+94718077484">+94 71 807 7484</a></p>
+                </div>
+                <div class="contact-info-block">
+                    <h3>📧 Email</h3>
+                    <p><a href="wathsala.cake4u@gmail.com">wathsala.cake4u@gmail.com</a></p>
+                </div>
+                <div class="contact-info-block">
+                    <h3>🕒 Hours</h3>
+                    <p>Mon – Sat: 9:00 AM – 7:00 PM</p>
+                    <p>Sunday: 10:00 AM – 4:00 PM</p>
+                </div>
+
+                <a href="tel:+94714397961" class="btn-order-call">📞 Order by Phone Now</a>
+                </div>
+
+                <!-- RIGHT: FORM -->
+                <div class="contact-form-wrap">
+
+                <!-- TOGGLE -->
+                <div class="form-toggle" role="tablist" aria-label="Choose enquiry type">
+                    <button type="button" class="toggle-btn active" data-mode="enquiry" role="tab" aria-selected="true">
+                    General Enquiry
+                    </button>
+                    <button type="button" class="toggle-btn" data-mode="order" role="tab" aria-selected="false">
+                    🎂 Order Now
+                    </button>
+                </div>
+
+                <form class="contact-form" id="contactForm">
+
+                    <div class="form-row">
+                    <label for="name">Full Name</label>
+                    <input type="text" id="name" name="name" required>
+                    </div>
+
+                    <div class="form-row">
+                    <label for="phone">Phone Number</label>
+                    <input type="tel" id="phone" name="phone" required>
+                    </div>
+
+                    <div class="form-row">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email">
+                    </div>
+
+                    <!-- ORDER-ONLY FIELDS -->
+                    <div class="order-fields" hidden>
+
+                    <div class="form-row">
+                        <label for="cakeType">Cake Category</label>
+                        <select id="cakeType" name="cakeType">
+                        <option value="">Select a category</option>
+                        <option value="wedding">Wedding Cake</option>
+                        <option value="birthday">Birthday Cake</option>
+                        <option value="anniversary">Anniversary Cake</option>
+                        <option value="cupcakes">Cupcakes</option>
+                        <option value="custom">Custom / Other</option>
+                        </select>
+                    </div>
+
+                    <div class="form-row-split">
+                        <div class="form-row">
+                        <label for="size">Size / Servings</label>
+                        <input type="text" id="size" name="size" placeholder="e.g. 2kg / 20 servings">
+                        </div>
+                        <div class="form-row">
+                        <label for="date">Date Needed</label>
+                        <input type="date" id="date" name="date">
+                        </div>
+                    </div>
+
+                    </div>
+
+                    <div class="form-row">
+                    <label for="message" id="messageLabel">Your Message</label>
+                    <textarea id="message" name="message" rows="4" required></textarea>
+                    </div>
+
+                    <button type="submit" class="btn-submit">Send Enquiry</button>
+
+                    <p class="form-success" id="formSuccess" hidden>
+                    ✅ Thank you! Your request has been sent. We'll get back to you shortly.
+                    </p>
+                </form>
+                </div>
+
+            </section>
+        </main>
+
+        <footer>
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="footer-logo">
+                        <img src="./images/logo.jpeg" alt="CAKE 4U" class="footer-logo-image" />
+                        <span class="footer-brand">CAKE 4U</span>
+                    </div>
+                    <p>A SLICE OF HEAVEN</p>
+                </div>
+                <div class="footer-section">
+                    <h2>Quick Links</h2>
+                    <div class="footer-links">
+                        <a href="home.html">Home</a>
+                        <a href="about.html">About Us</a>
+                        <a href="products.html">Products</a>
+                        <a href="gallery.html">Gallery</a>
+                        <a href="contact.html">Contact Us</a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h2>Contact</h2>
+                    <p>Mabopitiya, Alawwa</p>
+                    <P>071 4397961</P>
+                    <p>071 8077484</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 CAKE 4U. All rights reserved.</p>
+            </div>
+        </footer>
+
+        <script>
+            // Checks every "revealable" element (goal cards, content boxes,
+            // and the #exp heading) and adds the "active" class once the
+            // element has scrolled far enough into the viewport, which
+            // triggers the fade/slide-in CSS transition defined above.
+            function reveal() {
+                // Select all elements that should animate in on scroll
+                const reveals = document.querySelectorAll(".card, .content-box, #exp");
+
+                reveals.forEach((item) => {
+                // Height of the visible browser window
+                const windowHeight = window.innerHeight;
+                // Distance from the top of the viewport to the top of the element
+                const elementTop = item.getBoundingClientRect().top;
+                // How many pixels of the element must be visible before it reveals
+                const visiblePoint = 100;
+
+                // If the element has scrolled far enough up into view, reveal it
+                if (elementTop < windowHeight - visiblePoint) {
+                    item.classList.add("active");
+                }
+                });
+            }
+
+            // Re-check on every scroll event
+            window.addEventListener("scroll", reveal);
+            // Run once immediately on page load (in case content is already in view)
+            reveal();
+            
+
+            document.addEventListener('DOMContentLoaded', function () {
+
+                var toggleButtons = document.querySelectorAll('.toggle-btn');
+                var orderFields = document.querySelector('.order-fields');
+                var submitBtn = document.querySelector('.btn-submit');
+                var messageLabel = document.getElementById('messageLabel');
+                var form = document.getElementById('contactForm');
+                var successMsg = document.getElementById('formSuccess');
+
+                // ============ TOGGLE: ENQUIRY vs ORDER ============
+                toggleButtons.forEach(function (btn) {
+                    btn.addEventListener('click', function () {
+                        toggleButtons.forEach(function (b) {
+                            b.classList.remove('active');
+                            b.setAttribute('aria-selected', 'false');
+                        });
+                        btn.classList.add('active');
+                        btn.setAttribute('aria-selected', 'true');
+
+                        var mode = btn.dataset.mode;
+                        var isOrder = mode === 'order';
+
+                        orderFields.hidden = !isOrder;
+                        submitBtn.textContent = isOrder ? 'Submit Order' : 'Send Enquiry';
+                        messageLabel.textContent = isOrder ? 'Additional Notes (optional)' : 'Your Message';
+
+                        // Only require message for general enquiries
+                        document.getElementById('message').required = !isOrder;
+                    });
+                });
+
+                // ============ FORM SUBMIT ============
+                if (form) {
+                    form.addEventListener('submit', function (e) {
+                        e.preventDefault();
+
+                        // Here you'd normally send data to a server / form service.
+                        // For now, just show a success message and reset the form.
+                        successMsg.hidden = false;
+                        form.reset();
+                        orderFields.hidden = true;
+
+                        // Reset toggle back to default state
+                        toggleButtons.forEach(function (b) {
+                            b.classList.remove('active');
+                            b.setAttribute('aria-selected', 'false');
+                        });
+                        toggleButtons[0].classList.add('active');
+                        toggleButtons[0].setAttribute('aria-selected', 'true');
+                        messageLabel.textContent = 'Your Message';
+                        submitBtn.textContent = 'Send Enquiry';
+
+                        setTimeout(function () {
+                            successMsg.hidden = true;
+                        }, 6000);
+                    });
+                }
+
+            });
+        </script>
+
+    </body>
+</html>

@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Cake 4U - A Slice of Heaven</title>
+        <link rel="stylesheet" href="style.css">
+
+        <style>
+
+            /* ============ HERO ============ */
+            .hero {
+            position: relative;
+            overflow: hidden;
+            display: grid;
+            grid-template-columns: 1.1fr 0.9fr;
+            align-items: center;
+            gap: var(--space-lg);
+            margin: 0 auto;
+            padding: var(--space-xl) var(--space-lg);
+            background-image:
+                url("./images/ck2.jpg");
+            background-attachment: fixed;    
+            background-size: cover ;
+            background-position: center;
+            background-repeat: no-repeat;
+            }
+
+            .hero-heading {
+            font-family: Georgia, 'Times New Roman', Times, serif;
+            font-weight: 700;
+            font-size: 3rem;
+            line-height: 1.15;
+            color: var(--primary-color);
+            margin: 0 0 var(--space-md);
+            }
+
+            .hero-sub {
+            font-family: Georgia, "Times New Roman", serif;
+            font-style: italic;
+            font-size: 1.1rem;
+            color: var(--medium-text);
+            max-width: 46ch;
+            margin: 0 0 var(--space-lg);
+            }
+
+            .hero-button {
+            display: inline-block;
+            font-family: "Poppins", "Segoe UI", Arial, sans-serif;
+            font-weight: 600;
+            font-size: 0.95rem;
+            color: var(--white);
+            background: var(--primary-color);
+            padding: 14px 34px;
+            border-radius: 999px;
+            text-decoration: none;
+            transition: background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+            }
+
+            .hero-button:hover,
+            .hero-button:focus-visible {
+            color: var(--white);
+            background: var(--accent-gold);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(217, 139, 50, 0.3);
+            }
+
+            @keyframes heroPop {
+            to { opacity: 1; transform: scale(1); }
+            }
+
+            /* ============ SECTION HEADINGS ============ */
+            .section-heading {
+            font-family: Georgia, 'Times New Roman', Times, serif;
+            font-weight: 700;
+            color: var(--primary-color);
+            text-align: center;
+            margin: 0 auto var(--space-sm);
+            }
+
+            .categories > p,
+            .why-cake4u > p {
+            text-align: center;
+            color: var(--medium-text);
+            max-width: 640px;
+            margin: 0 auto var(--space-lg);
+            }
+
+            /* ============ CATEGORIES ============ */
+            .categories {
+            max-width: 1180px;
+            margin: 0 auto;
+            padding: var(--space-xl) var(--space-lg);
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: var(--space-lg);
+            }
+
+            .categories .section-heading,
+            .categories > p {
+            grid-column: 1 / -1;
+            }
+
+            .category-card {
+            display: block;
+            background: var(--white);
+            border: 1px solid var(--light-border);
+            border-radius: var(--radius);
+            padding: var(--space-lg);
+            text-decoration: none;
+            color: inherit;
+            opacity: 0;
+            transform: translateY(16px);
+            transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+            }
+
+            .category-card.is-visible {
+            animation: cardRise 0.5s ease forwards;
+            }
+
+            @keyframes cardRise {
+            to { opacity: 1; transform: translateY(0); }
+            }
+
+            .category-card:hover,
+            .category-card:focus-visible {
+            transform: translateY(-6px);
+            box-shadow: 0 16px 30px rgba(38, 50, 56, 0.1);
+            border-color: var(--primary-dark);
+            }
+
+            .category-icon {
+            font-size: 2.2rem;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: var(--light-bg);
+            margin-bottom: var(--space-md);
+            transition: background 0.25s ease;
+            }
+
+            .category-card:hover .category-icon {
+            background: var(--primary-dark);
+            }
+
+            .category-card h3 {
+            font-family: "Poppins", "Segoe UI", Arial, sans-serif;
+            font-weight: 600;
+            color: var(--primary-color);
+            margin: 0 0 var(--space-sm);
+            font-size: 1.1rem;
+            }
+
+            .category-card p {
+            margin: 0;
+            color: var(--medium-text);
+            font-size: 0.92rem;
+            }
+
+            /* ============ WHY CAKE4U ============ */
+            .why-cake4u {
+            padding: var(--space-xl) var(--space-lg);
+            }
+
+            .why-grid {
+            max-width: 900px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: var(--space-lg);
+            }
+
+            .why-item {
+            text-align: center;
+            padding: var(--space-lg);
+            background: var(--white);
+            border-radius: var(--radius);
+            border: 1px solid var(--light-border);
+            opacity: 0;
+            transform: translateY(16px);
+            transition: box-shadow 0.25s ease, transform 0.25s ease;
+            }
+
+            .why-item.is-visible {
+            animation: cardRise 0.5s ease forwards;
+            }
+
+            .why-item:hover {
+            box-shadow: 0 14px 26px rgba(38, 50, 56, 0.08);
+            }
+
+            .why-icon {
+            font-size: 2rem;
+            margin-bottom: var(--space-sm);
+            }
+
+            .why-item h3 {
+            font-family: "Poppins", "Segoe UI", Arial, sans-serif;
+            font-weight: 600;
+            color: var(--primary-color);
+            font-size: 1.05rem;
+            margin: 0 0 var(--space-sm);
+            }
+
+            .why-item p {
+            margin: 0;
+            color: var(--medium-text);
+            font-size: 0.92rem;
+            }
+
+            /* ============ RESPONSIVE ============ */
+            @media (max-width: 992px) {
+            .categories { grid-template-columns: repeat(2, 1fr); }
+            }
+
+            @media (max-width: 768px) {
+            .hero {
+                grid-template-columns: 1fr;
+                text-align: center;
+                padding: var(--space-lg);
+            }
+            .hero-sub { margin-left: auto; margin-right: auto; }
+            .hero-heading { font-size: 2rem; }
+
+            .categories { grid-template-columns: 1fr; }
+            .why-grid { grid-template-columns: 1fr; }
+            }
+
+            @media (prefers-reduced-motion: reduce) {
+            .category-card, .why-item { animation: none !important; opacity: 1 !important; transform: none !important; }
+            * { transition: none !important; }
+            }
+        </style>
+    </head>
+
+    <body>
+        <header>
+            <a href="#" class="logo">
+                <img src="./images/logo.jpeg" alt="CAKE 4U" class="logo-image" />
+            
+                <div class="logo-text"> 
+                    <h1>CAKE 4U</h1>
+                    <p>A SLICE OF HEAVEN</p>
+                </div>
+            </a>
+
+            <button class="nav-toggle" id="navToggle" aria-lable="Togle menu" aria-expanded="false" aria-controls="mainNav">
+                <span></span><span></span><span></span>
+            </button>
+
+            <nav class="main-nav" id="mainNav">
+                <a href="home.html" class="nav-link active">Home</a>
+                <a href="about.html" class="nav-link">About Us</a>
+                <a href="products.html" class="nav-link">Products</a>
+                <a href="gallery.html" class="nav-link">Gallery</a>
+                <a href="contact.html" class="nav-link">Contact Us</a>
+            </nav>
+        </header>
+
+        <main>
+            <!-- HERO -->
+            <section class="hero">
+                <div class="hero-copy">
+                <h1 class="hero-heading">Your Slice of Heaven<br>Starts Here</h1>
+                <p class="hero-sub">
+                    Tell us the occasion, pick a flavour, and we'll bake something worth every slice.
+                </p>
+                <a href="#categories" class="hero-button">Explore Our Cakes</a>
+                </div>
+
+            </section>
+
+            <!-- SHOP BY CATEGORY -->
+            <section class="categories" id="categories">
+                <h2 class="section-heading">Shop by Category</h2>
+                <p>Pick a category to jump straight to it on our Products page.</p>
+
+                <a href="products.html#birthday" class="category-card">
+                    <div class="category-icon">🎂</div>
+                    <h3>Birthday Cakes</h3>
+                    <p>Fun, colourful cakes to celebrate another year.</p>
+                </a>
+
+                <a href="products.html#wedding" class="category-card">
+                    <div class="category-icon">💍</div>
+                    <h3>Wedding Cakes</h3>
+                    <p>Elegant tiered cakes for your big day.</p>
+                </a>
+
+                <a href="products.html#anniversary" class="category-card">
+                    <div class="category-icon">💐</div>
+                    <h3>Anniversary Cakes</h3>
+                    <p>Romantic designs to mark the milestones.</p>
+                </a>
+
+                <a href="products.html#cupcakes" class="category-card">
+                    <div class="category-icon">🧁</div>
+                    <h3>Cupcakes</h3>
+                    <p>Elegant tiered cakes for your big day & Bite-sized treats, boxed by the dozen.</p>
+                </a>
+
+                <a href="products.html#custom" class="category-card">
+                    <div class="category-icon">✨</div>
+                    <h3>And More</h3>
+                    <p>Custom orders for every other occasion.</p>
+                </a>
+                </div>
+            </section>
+
+            <!-- WHY CAKE4U -->
+            <section class="why-cake4u">
+                <h2 class="section-heading">Why Cake4U</h2>
+
+                <div class="why-grid">
+                <div class="why-item">
+                    <div class="why-icon">🎂</div>
+                    <h3>Baked to Order</h3>
+                    <p>Nothing pre-made or sitting on a shelf — every cake starts the day you order it.</p>
+                </div>
+                <div class="why-item">
+                    <div class="why-icon">✍️</div>
+                    <h3>Custom Designs</h3>
+                    <p>Custom messages and occasion designs for birthdays, weddings, and more.</p>
+                </div>
+                </div>
+            </section>            
+
+        </main>
+
+        <footer>
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="footer-logo">
+                        <img src="./images/logo.jpeg" alt="CAKE 4U" class="footer-logo-image" />
+                        <span class="footer-brand">CAKE 4U</span>
+                    </div>
+                    <p>A SLICE OF HEAVEN</p>
+                </div>
+                <div class="footer-section">
+                    <h2>Quick Links</h2>
+                    <div class="footer-links">
+                        <a href="home.html">Home</a>
+                        <a href="about.html">About Us</a>
+                        <a href="products.html">Products</a>
+                        <a href="gallery.html">Gallery</a>
+                        <a href="contact.html">Contact Us</a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h2>Contact</h2>
+                    <p>Mabopitiya, Alawwa</p>
+                    <P>071 4397961</P>
+                    <p>071 8077484</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 CAKE 4U. All rights reserved.</p>
+            </div>
+        </footer>
+
+        <script>
+            // Checks every "revealable" element (goal cards, content boxes,
+            // and the #exp heading) and adds the "active" class once the
+            // element has scrolled far enough into the viewport, which
+            // triggers the fade/slide-in CSS transition defined above.
+            function reveal() {
+                // Select all elements that should animate in on scroll
+                const reveals = document.querySelectorAll(".card, .content-box, #exp");
+
+                reveals.forEach((item) => {
+                // Height of the visible browser window
+                const windowHeight = window.innerHeight;
+                // Distance from the top of the viewport to the top of the element
+                const elementTop = item.getBoundingClientRect().top;
+                // How many pixels of the element must be visible before it reveals
+                const visiblePoint = 100;
+
+                // If the element has scrolled far enough up into view, reveal it
+                if (elementTop < windowHeight - visiblePoint) {
+                    item.classList.add("active");
+                }
+                });
+            }
+
+            // Re-check on every scroll event
+            window.addEventListener("scroll", reveal);
+            // Run once immediately on page load (in case content is already in view)
+            reveal();
+
+            document.addEventListener('DOMContentLoaded', function () {
+            var revealTargets = document.querySelectorAll('.category-card, .why-item');
+
+            if (!('IntersectionObserver' in window) || revealTargets.length === 0) {
+                revealTargets.forEach(function (el) { el.classList.add('is-visible'); });
+                return;
+            }
+
+            var observer = new IntersectionObserver(function (entries, obs) {
+                entries.forEach(function (entry) {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                    obs.unobserve(entry.target);
+                }
+                });
+            }, { threshold: 0.15 });
+
+            revealTargets.forEach(function (el) { observer.observe(el); });
+            });
+        </script>
+
+    </body>
+</html>

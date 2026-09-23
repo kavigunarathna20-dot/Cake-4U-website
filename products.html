@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Cake 4U - A Slice of Heaven</title>
+        <link rel="stylesheet" href="style.css">
+
+        <style>
+            .Headings {
+                font-family: Georgia, 'Times New Roman', Times, serif;
+                text-align: center;
+                color: var(--primary-color);
+                font-size: 60px;
+            }
+
+           .gallery-hero {
+                font-family: Georgia, 'Times New Roman', Times, serif;
+                text-align: center;
+                font-size: 18px;
+                padding: 20px 30px;
+            }
+            .gallery-hero h2 {
+                text-align: center;
+                font-size: 30px;
+                color: var(--dark-text, #222);
+                margin-bottom: 10px;
+            }
+            .gallery-hero p {
+                max-width: 600px;
+                margin: 0 auto;
+                font-size: 19px;
+                line-height: 1.6;
+                color: var(--medium-text, #666);
+            }
+            /* ------------------------------------------------------------
+        2. FILTER BAR — row of category buttons used to filter cards
+        ------------------------------------------------------------ */
+            .filter-bar {
+                display: flex;
+                justify-content: center;
+                flex-wrap: wrap;
+                gap: 10px;
+                padding: 20px 40px 30px;
+            }
+            .filter-btn {
+                background: rgba(255, 255, 255, 0.25);
+                border: 1px solid rgba(76, 159, 56, 0.3);
+                border-radius: 30px;
+                padding: 10px 24px;
+                font-size: 13px;
+                font-weight: 600;
+                color: var(--dark-text, #222);
+                cursor: pointer;
+                backdrop-filter: blur(10px);
+                -webkit-backdrop-filter: blur(10px);
+                transition: all 0.3s ease;
+            }
+            .filter-btn:hover {
+                background: rgba(76, 159, 56, 0.15);
+                border-color: var(--primary-color, #4c9f38);
+            }
+            /* Currently-selected filter button, toggled by JS below */
+            .filter-btn.active {
+                background: var(--primary-color, #4c9f38);
+                color: #fff;
+                border-color: var(--primary-color, #4c9f38);
+            }
+            /* ------------------------------------------------------------
+        3. GALLERY GRID — responsive grid container holding all
+        gallery cards
+        ------------------------------------------------------------ */
+            #gallery-grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+                gap: 24px;
+                max-width: 1300px;
+                margin: 0 auto;
+                padding: 20px;
+            }
+            /* ------------------------------------------------------------
+        4. GALLERY CARD — one clickable card per gallery item
+        ------------------------------------------------------------ */
+            .gallery-card {
+                background: rgba(255, 255, 255, 0.2);
+                border: 1px solid rgba(255, 255, 255, 0.35);
+                border-radius: 16px;
+                overflow: hidden;
+                cursor: pointer;
+                backdrop-filter: blur(12px);
+                -webkit-backdrop-filter: blur(12px);
+                /* scroll-reveal starting state (see reveal() script below) */
+                opacity: 0;
+                transform: translateY(30px);
+                transition:
+                opacity 0.8s ease,
+                transform 0.25s ease,
+                box-shadow 0.25s ease,
+                background 0.3s ease;
+            }
+            /* scroll-reveal end state, toggled on by JS when card scrolls into view */
+            .gallery-card.visible {
+                opacity: 1;
+                transform: translateY(0);
+            }
+            .gallery-card:hover {
+                transform: translateY(-10px) scale(1.03);
+                box-shadow:
+                0 20px 40px rgba(0, 0, 0, 0.15),
+                0 0 20px rgba(76, 159, 56, 0.15);
+            }
+            /* -- 4a. Thumbnail image area inside each card -- */
+            .gallery-thumb {
+                position: relative;
+                width: 100%;
+                height: 220px;
+                overflow: hidden;
+            }
+            .gallery-thumb img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                transition: transform 0.8s ease 0.15s;
+            }
+            /* zoom the thumbnail image slightly on card hover */
+            .gallery-card:hover .gallery-thumb img {
+                transform: scale(1.12);
+            }
+            /* -- 4b. Category badge positioned over the thumbnail -- */
+            .gallery-overlay {
+                position: absolute;
+                top: 12px;
+                right: 12px;
+            }
+            .gallery-category {
+                background: var(--primary-color);
+                color: #fff;
+                font-size: 11px;
+                font-weight: 600;
+                padding: 5px 14px;
+                border-radius: 20px;
+            }
+            /* -- 4c. Text info block (title + short description) below the thumbnail -- */
+            .gallery-info {
+                padding: 18px;
+            }
+            .gallery-info h3 {
+                font-size: 23px;
+                text-align: center;
+                margin-bottom: 8px;
+                color: var(--dark-text, #222);
+            }
+            .gallery-info p {
+                font-size: 17px;
+                text-align: center;
+                line-height: 1.6;
+                color: var(--medium-text, #666);
+            }
+            /* ------------------------------------------------------------
+        5. MODAL — popup shown when a gallery card is clicked
+        ------------------------------------------------------------ */
+            .modal-overlay {
+                display: none;
+                position: fixed;
+                inset: 0;
+                z-index: 1000;
+                background: rgba(0, 0, 0, 0.75);
+                justify-content: center;
+                align-items: center;
+                padding: 30px;
+            }
+            /* shown when JS adds "active" (see script below) */
+            .modal-overlay.active {
+                display: flex;
+            }
+            .modal-content {
+                position: relative;
+                width: 100%;
+                max-width: 750px;
+                overflow: hidden;
+                border-radius: 18px;
+                background: rgba(255, 255, 255, 0.95);
+                border: 1px solid rgba(255, 255, 255, 0.4);
+                backdrop-filter: blur(16px);
+                box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+                max-height: 90vh;
+                overflow-y: auto;
+            }
+            .modal-content img {
+                width: 100%;
+                display: block;
+                max-height: 450px;
+                object-fit: cover;
+            }
+            .modal-close {
+                position: absolute;
+                top: 15px;
+                right: 15px;
+                width: 40px;
+                height: 40px;
+                border: none;
+                border-radius: 50%;
+                background: rgba(0, 0, 0, 0.6);
+                color: white;
+                font-size: 24px;
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                line-height: 1;
+                padding: 0;
+                z-index: 10;
+            }
+            .modal-close:hover {
+                background: rgba(0, 0, 0, 0.8);
+            }
+            .modal-text {
+                padding: 24px 28px;
+            }
+            .modal-caption {
+                font-size: 22px;
+                font-weight: 700;
+                margin-bottom: 8px;
+            }
+            .modal-description {
+                white-space: pre-line;
+                font-size: 14px;
+                line-height: 1.7;
+            }
+            /* ============================================================
+        RESPONSIVE / MEDIA QUERIES
+        ============================================================ */
+            @media (max-width: 768px) {
+                .gallery-hero h2 {
+                font-size: 24px;
+                }
+                .filter-bar {
+                padding: 10px 20px 20px;
+                }
+                #gallery-grid {
+                grid-template-columns: 1fr;
+                gap: 16px;
+                padding: 20px;
+                }
+            }
+            
+            /* ==========================
+        Modal image
+        ========================== */
+            #modal-image {
+                width: 100%;
+                height: 450px;
+                object-fit: cover;
+                display: block;
+            }
+        </style>
+    </head>
+
+    <body>
+        <header>
+            <a href="#" class="logo">
+                <img src="./images/logo.jpeg" alt="CAKE 4U" class="logo-image" />
+            
+                <div class="logo-text"> 
+                    <h1>CAKE 4U</h1>
+                    <p>A SLICE OF HEAVEN</p>
+                </div>
+            </a>
+
+            <button class="nav-toggle" id="navToggle" aria-lable="Togle menu" aria-expanded="false" aria-controls="mainNav">
+                <span></span><span></span><span></span>
+            </button>
+
+            <nav class="main-nav" id="mainNav">
+                <a href="home.html" class="nav-link">Home</a>
+                <a href="about.html" class="nav-link">About Us</a>
+                <a href="products.html" class="nav-link active">Products</a>
+                <a href="gallery.html" class="nav-link">Gallery</a>
+                <a href="contact.html" class="nav-link">Contact Us</a>
+            </nav>
+        </header>
+
+        <main>
+            <!-- Page heading -->
+            <h2 class="Headings">Our Service</h2>
+            <!-- Intro/description text under the heading -->
+            <div class="gallery-hero">
+                <h3>✨🎂 Welcome to Our Sweet World! 🎂✨</h3>
+
+                <p>Welcome to Cake 4U, where every cake is made with love, creativity, and a little sprinkle of happiness! 💕 From elegant birthday cakes to delicious cupcakes and custom-designed creations, we bake every treat to make your special moments even sweeter.
+
+                We use fresh ingredients and carefully crafted designs to create cakes that look beautiful and taste amazing. Whether you're celebrating a birthday, anniversary, wedding, or simply craving something sweet, we're here to make your celebration unforgettable.</p>
+
+                <p>**Because every celebration deserves a delicious slice of happiness! 🍰💖**
+                </p>
+            </div>
+            <!-- Category filter buttons: clicking one filters the grid below via JS -->
+            <div class="filter-bar">
+                <button class="filter-btn active" data-category="All">All</button>
+                <button class="filter-btn" data-category="birthday">Birthday Cakes</button>
+                <button class="filter-btn" data-category="wedding">Wedding Cakes</button>
+                <button class="filter-btn" data-category="anniversary">Anniversary Cakes</button>
+                <button class="filter-btn" data-category="cupcakes">Cupcakes</button>
+                <button class="filter-btn" data-category="custom">More</button>
+            </div>
+            <!-- Gallery grid: each .gallery-card carries data-* attributes
+            (category/title/desc/img) that the modal script reads when
+            the card is clicked -->
+            <div id="gallery-grid">
+                <!-- Card: Birthday cakes -->
+                <div
+                class="gallery-card reveal"
+                data-category="birthday"
+                data-title="Birthday Cakes"
+                data-desc="Chocolate Truffle — Dark cocoa layers, ganache filling, cocoa nib crunch.&#10;Rainbow Funfetti — Vanilla sponge with sprinkle layers, whipped cream frosting.&#10;Strawberry Bliss — Vanilla sponge, fresh strawberry cream, white chocolate shavings."
+                data-img="./images/birthday.jpg"
+                >
+                <div class="gallery-thumb">
+                    <img src="./images/birthday1.jpg" alt="">
+                    <div class="gallery-overlay">
+                    <span class="gallery-category">Birthday Cakes</span>
+                    </div>
+                </div>
+                <div class="gallery-info">
+                    <h3>Birthday Cakes</h3>
+                    <p>Fun, colourful cakes to celebrate another year — pick a flavour and we'll do the rest.</p>
+                </div>
+                </div>
+                <!-- Card: Wedding cakes -->
+                <div
+                class="gallery-card reveal"
+                data-category="wedding"
+                data-title="Wedding Cakes"
+                data-desc="Ivory Rose Tier — Three-tier vanilla sponge, sugar roses, ivory buttercream.&#10;Classic White Tier — Two-tier almond sponge, smooth fondant, pearl detailing.&#10;Blush Garden Tier — Layered sponge with hand-piped florals in soft blush tones."
+                data-img="./images/wedding.jpg"
+                >
+                <div class="gallery-thumb">
+                    <img src="./images/wedding1.jpg" alt="">
+                    <div class="gallery-overlay">
+                    <span class="gallery-category">Wedding Cakes</span>
+                    </div>
+                </div>
+                <div class="gallery-info">
+                    <h3>Wedding Cakes</h3>
+                    <p>Elegant tiered cakes, custom-designed for your big day.</p>
+                </div>
+                </div>
+                <!-- Card: Anniversary cakes -->
+                <div
+                class="gallery-card reveal"
+                data-category="anniversary"
+                data-title="Anniversary Cakes"
+                data-desc="Red Velvet Dream — Classic red velvet, cream cheese frosting, velvet crumb dust.&#10;Rose Gold Elegance — Chocolate sponge, rose-gold drip, sugar roses.&#10;Golden Years — Vanilla-almond sponge, gold leaf accents, champagne buttercream."
+                data-img="./images/anniversary.jpg"
+                >
+                <div class="gallery-thumb">
+                    <img src="./images/anniversary1.jpg" alt="">
+                    <div class="gallery-overlay">
+                    <span class="gallery-category">Anniversary Cakes</span>
+                    </div>
+                </div>
+                <div class="gallery-info">
+                    <h3>Anniversary Cakes</h3>
+                    <p>Romantic designs to mark the milestones.</p>
+                </div>
+                </div>
+                <!-- Cupcakes -->
+                <div
+                class="gallery-card reveal"
+                data-category="cupcakes"
+                data-title="Cupcakes"
+                data-desc="Lemon Butter Cream (Box of 6) — Zesty lemon sponge, silky buttercream swirl.&#10;Chocolate Fudge (Box of 6) — Rich cocoa cupcakes, fudge frosting, choc drizzle.&#10;Vanilla Bean (Box of 6) — Classic vanilla sponge, vanilla bean buttercream."
+                data-img="./images/cupcake.jpg"
+                >
+                <div class="gallery-thumb">
+                    <img src="./images/cupcake1.jpg" alt="">
+                    <div class="gallery-overlay">
+                    <span class="gallery-category">Cupcakes</span>
+                    </div>
+                </div>
+                <div class="gallery-info">
+                    <h3>Cupcakes</h3>
+                    <p>Bite-sized treats, boxed by the dozen.</p>
+                </div>
+                </div>
+                <!-- More -->
+                <div
+                class="gallery-card reveal"
+                data-category="custom"
+                data-title="More"
+                data-desc="Custom Order — Tell us the occasion, flavour, and design — we'll build it around you.&#10;Themed Cakes — Character, hobby, or brand-themed designs for any celebration.&#10;Corporate & Bulk Orders — Cupcake towers and cake platters for office events and parties."
+                data-img="./images/more.jpg"
+                >
+                <div class="gallery-thumb">
+                    <img src="./images/more1.jpg" alt="">
+                    <div class="gallery-overlay">
+                    <span class="gallery-category">More Cakes</span>
+                    </div>
+                </div>
+                <div class="gallery-info">
+                    <h3>More Cakes</h3>
+                    <p>Custom orders for every other occasion — get in touch and tell us what you need.</p>
+                </div>
+            </div>
+            <div class="modal-overlay" id="gallery-modal">
+                <div class="modal-content" id="modal-content">
+                    <button class="modal-close" aria-label="Close">&times;</button>
+                    <!-- Card image shown at the top of the modal -->
+                    <img id="modal-image" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=" alt="Modal image">
+
+                <div class="modal-text">
+                    <div class="modal-caption"></div>
+                    <div class="modal-description"></div>
+                </div>
+        </main>
+    
+
+        <footer>
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="footer-logo">
+                        <img src="./images/logo.jpeg" alt="CAKE 4U" class="footer-logo-image" />
+                        <span class="footer-brand">CAKE 4U</span>
+                    </div>
+                    <p>A SLICE OF HEAVEN</p>
+                </div>
+                <div class="footer-section">
+                    <h2>Quick Links</h2>
+                    <div class="footer-links">
+                        <a href="home.html">Home</a>
+                        <a href="about.html">About Us</a>
+                        <a href="products.html">Products</a>
+                        <a href="gallery.html">Gallery</a>
+                        <a href="contact.html">Contact Us</a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h2>Contact</h2>
+                    <p>Mabopitiya, Alawwa</p>
+                    <P>071 4397961</P>
+                    <p>071 8077484</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 CAKE 4U. All rights reserved.</p>
+            </div>
+        </footer>
+
+        <script>
+            // Checks every "revealable" element (goal cards, content boxes,
+            // and the #exp heading) and adds the "active" class once the
+            // element has scrolled far enough into the viewport, which
+            // triggers the fade/slide-in CSS transition defined above.
+            function reveal() {
+                // Select all elements that should animate in on scroll
+                const reveals = document.querySelectorAll(".card, .content-box, #exp");
+
+                reveals.forEach((item) => {
+                // Height of the visible browser window
+                const windowHeight = window.innerHeight;
+                // Distance from the top of the viewport to the top of the element
+                const elementTop = item.getBoundingClientRect().top;
+                // How many pixels of the element must be visible before it reveals
+                const visiblePoint = 100;
+
+                // If the element has scrolled far enough up into view, reveal it
+                if (elementTop < windowHeight - visiblePoint) {
+                    item.classList.add("active");
+                }
+                });
+            }
+
+            // Re-check on every scroll event
+            window.addEventListener("scroll", reveal);
+            // Run once immediately on page load (in case content is already in view)
+            reveal();
+
+            /* =========================
+            Scroll Reveal Animation
+            ========================= */
+            function reveal() {
+                const reveals = document.querySelectorAll(".gallery-card");
+
+                reveals.forEach((item) => {
+                const windowHeight = window.innerHeight;
+                const elementTop = item.getBoundingClientRect().top;
+                const visiblePoint = 100;
+
+                if (elementTop < windowHeight - visiblePoint) {
+                    item.classList.add("visible");
+                }
+                });
+            }
+
+            window.addEventListener("scroll", reveal);
+            reveal();
+
+            /* =========================
+            Gallery Filter
+            ========================= */
+            const filterBtns = document.querySelectorAll(".filter-btn");
+            const cards = document.querySelectorAll(".gallery-card");
+
+            filterBtns.forEach((btn) => {
+                btn.addEventListener("click", () => {
+                filterBtns.forEach((b) => b.classList.remove("active"));
+                btn.classList.add("active");
+
+                const selectedCategory = btn.dataset.category;
+
+                cards.forEach((card) => {
+                    if (
+                    selectedCategory === "All" ||
+                    card.dataset.category === selectedCategory
+                    ) {
+                    card.style.display = "block";
+                    } else {
+                    card.style.display = "none";
+                    }
+                });
+                });
+            });
+
+            /* =========================
+            Hover Interaction
+            ========================= */
+            cards.forEach((card) => {
+                card.addEventListener("mouseenter", () => {
+                card.style.transform = "translateY(-10px) scale(1.03)";
+                });
+
+                card.addEventListener("mouseleave", () => {
+                card.style.transform = "";
+                });
+            });
+
+            /* =========================
+            Modal Functionality
+            Populates the modal with the clicked card's image, title, and
+            description, taken from its data-* attributes.
+            ========================= */
+            const modal = document.getElementById("gallery-modal");
+            const modalImage = document.getElementById("modal-image");
+            const modalCaption = document.querySelector(".modal-caption");
+            const modalDescription = document.querySelector(".modal-description");
+            const modalClose = document.querySelector(".modal-close");
+
+            cards.forEach((card) => {
+                card.addEventListener("click", () => {
+                // Reset display in case a previous image failed to load
+                modalImage.style.display = "block";
+                modalImage.src = card.dataset.img;
+                modalImage.alt = card.dataset.title;
+
+                modalCaption.textContent = card.dataset.title;
+                modalDescription.textContent = card.dataset.desc;
+
+                modal.classList.add("active");
+                });
+            });
+
+            // If the modal image fails to load, hide it instead of showing
+            // the browser's broken-image icon
+            modalImage.addEventListener("error", () => {
+                modalImage.style.display = "none";
+            });
+
+            modalClose.addEventListener("click", () => {
+                modal.classList.remove("active");
+            });
+
+            modal.addEventListener("click", (e) => {
+                if (e.target === modal) {
+                modal.classList.remove("active");
+                }
+            });
+
+            const modalContent = document.getElementById("modal-content");
+
+            /* Default Theme */
+            modalContent.classList.add("theme-default");
+
+        </script>
+
+    </body>
+</html>
